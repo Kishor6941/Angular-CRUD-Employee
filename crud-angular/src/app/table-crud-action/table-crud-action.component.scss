@@ -1,0 +1,27 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+
+
+// .form-control:focus {
+//     border-color: #4f25ad;
+
+//    }
+//   .form-control.is-invalid {
+//     border: 1px solid #ff656b;
+
+//     &:focus {
+//       border: 1px solid #ff656b;
+//     }
+//   }
+
+  .is-invalid {
+    border: 1px solid #ff656b;
+    box-shadow: none;
+}
+
+.has-error {
+    color: #ff656b;
+}
+
+// .ng-valid {
+//     border: 0.8px solid #bdc0e5;
+// }

@@ -1,0 +1,128 @@
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+        <h1 class="text-white">Angular CRUD</h1>
+        <div class="d-flex">
+            <button type="button" (click)="openModal()" class="btn btn-success">Add Employee</button>
+        </div>
+    </div>
+</nav>
+
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th scope="col">Employee ID</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email ID</th>
+            <th scope="col">Mobile No.</th>
+            <th scope="col">Salary</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let employee of response; let i = index">
+            <tr>
+                <td>{{i+1}}</td>
+                <td>{{employee.firstName}}</td>
+                <td>{{employee.lastName}}</td>
+                <td>{{employee.email}}</td>
+                <td>{{employee.mobileNo}}</td>
+                <td>{{employee.salary}}</td>
+                <td>
+                    <button class="btn btn-info" (click)="editEmployee(employee)">Edit</button>
+                    <button class="btn btn-danger mx-3" (click)="deleteEmployee(employee)">Delete</button>
+                </td>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>
+
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"> {{action == 'create' ? "Add Employee Details" : "Edit Employee Details"}} </h4>
+                <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span
+                        aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="AddEmployeeForm">
+                    
+                    <div [hidden]="true" *ngIf="action == 'update'" class="mb-3">
+                        <label>ID</label>
+                        <input type="text" class="form-control"  formControlName = "id" readonly>
+                      </div>
+                    
+                    
+                    <div class="mb-3">
+                      <label>First Name</label>
+                      <input type="text" class="form-control" placeholder="First Name" formControlName = "firstName" [ngClass]="{'is-invalid':AddEmployeeForm.controls.firstName.invalid && (AddEmployeeForm.controls.firstName.dirty || AddEmployeeForm.controls.firstName.touched || submitted )}">
+                      <div
+                      *ngIf="AddEmployeeForm.controls.firstName.invalid && (AddEmployeeForm.controls.firstName.dirty || AddEmployeeForm.controls.firstName.touched || submitted)">
+                      <div id="name_error" *ngIf="AddEmployeeForm.controls['firstName'].errors.required"
+                          class="has-error" translate>
+                          First Name is required
+                      </div>
+                  </div> 
+                    </div>
+
+                    <div class="mb-3">
+                      <label>Last Name</label>
+                      <input type="text" class="form-control" placeholder="Last Name" formControlName = "lastName" [ngClass]="{'is-invalid':AddEmployeeForm.controls.lastName.invalid && (AddEmployeeForm.controls.lastName.dirty || AddEmployeeForm.controls.lastName.touched || submitted )}">
+                      <div
+                      *ngIf="AddEmployeeForm.controls.lastName.invalid && (AddEmployeeForm.controls.lastName.dirty || AddEmployeeForm.controls.lastName.touched || submitted)">
+                      <div id="name_error" *ngIf="AddEmployeeForm.controls['lastName'].errors.required"
+                          class="has-error" translate>
+                          First Name is required
+                      </div>
+                  </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input type="email" class="form-control" placeholder="Email" formControlName = "email" [ngClass]="{'is-invalid':AddEmployeeForm.controls.email.invalid && (AddEmployeeForm.controls.email.dirty || AddEmployeeForm.controls.email.touched || submitted )}">
+                        <div
+                        *ngIf="AddEmployeeForm.controls.email.invalid && (AddEmployeeForm.controls.email.dirty || AddEmployeeForm.controls.email.touched || submitted)">
+                        <div id="name_error" *ngIf="AddEmployeeForm.controls['email'].errors.required"
+                            class="has-error" translate>
+                           Email is required
+                        </div>
+                    </div> 
+                    </div>
+
+
+                      <div class="mb-3">
+                        <label>Mobile Number</label>
+                        <input type="text" class="form-control" placeholder="Mobile Number" formControlName = "mobileNo" [ngClass]="{'is-invalid':AddEmployeeForm.controls.mobileNo.invalid && (AddEmployeeForm.controls.mobileNo.dirty || AddEmployeeForm.controls.mobileNo.touched || submitted )}">
+                        <div
+                        *ngIf="AddEmployeeForm.controls.mobileNo.invalid && (AddEmployeeForm.controls.mobileNo.dirty || AddEmployeeForm.controls.mobileNo.touched || submitted)">
+                        <div id="name_error" *ngIf="AddEmployeeForm.controls['mobileNo'].errors.required"
+                            class="has-error" translate>
+                            Mobile Number is required
+                        </div>
+                    </div> 
+                    
+                    </div>
+
+                      <div class="mb-3">
+                        <label>Salary</label>
+                        <input type="text" class="form-control" placeholder="Salary" formControlName = "salary" [ngClass]="{'is-invalid':AddEmployeeForm.controls.salary.invalid && (AddEmployeeForm.controls.salary.dirty || AddEmployeeForm.controls.salary.touched || submitted )}">
+                        <div
+                        *ngIf="AddEmployeeForm.controls.salary.invalid && (AddEmployeeForm.controls.salary.dirty || AddEmployeeForm.controls.salary.touched || submitted)">
+                        <div id="name_error" *ngIf="AddEmployeeForm.controls['salary'].errors.required"
+                            class="has-error" translate>
+                            Salary is required
+                        </div>
+                    </div>  
+                    </div>
+                   
+                  </form>            </div>
+            <div class="modal-footer">
+                <button *ngIf="action == 'create'" type="button" class="btn btn-primary" (click)="AddEmployee('create')">Add</button>
+                <button *ngIf="action == 'update'" type="button" class="btn btn-primary" (click)="AddEmployee('update')">Update</button>
+                <button type="button" class="btn btn-secondary" (click)="onCloseHandled()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
